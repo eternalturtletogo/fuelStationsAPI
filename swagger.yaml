@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: Fuel Station API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3300/fuel-stations
+security:
+  - ApiKeyAuth: []  
+paths:
+  /:
+    get:
+      summary: Get all fuel stations
+      responses:
+        "200":
+          description: A list of fuel stations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FuelStationDTO"
+    post:
+      summary: Create a new fuel station
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FuelStationCreate"
+      responses:
+        "201":
+          description: Created fuel station
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FuelStationDTO"
+        default:
+          description: Unexpected error
+
+  /{fuelStationId}:
+    get:
+      summary: Get a fuel station by ID
+      parameters:
+        - name: fuelStationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FuelStationDTO"
+        "404":
+          description: Fuel station not found
+    delete:
+      summary: Delete a fuel station by ID
+      parameters:
+        - name: fuelStationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Fuel station deleted successfully
+        "404":
+          description: Fuel station not found
+
+  /{fuelStationId}/name:
+    patch:
+      summary: Update fuel station name
+      parameters:
+        - name: fuelStationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FuelStationDTO"
+        "404":
+          description: Fuel station not found
+
+  /{fuelStationId}/pump-price:
+    patch:
+      summary: Update pump prices of a fuel station
+      parameters:
+        - name: fuelStationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                properties:
+                  id:
+                    type: number
+                  price:
+                    type: number
+                    minimum: 0
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FuelStationDTO"
+        "404":
+          description: Fuel station not found
+
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: x-api-key  # name of the header, query parameter or cookie
+# 2) Apply the API key globally to all operations
+  schemas:
+    Pump:
+      type: object
+      properties:
+        id:
+          type: number
+        fuel_type:
+          type: string
+          enum:
+            - BENZIN_95
+            - BENZIN_98
+            - DIESEL
+        price:
+          type: number
+          minimum: 0
+        available:
+          type: boolean
+    FuelStationDTO:
+      type: object
+      properties:
+        _id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+        pumps:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pump"
+    FuelStationCreate:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+        pumps:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pump"
+

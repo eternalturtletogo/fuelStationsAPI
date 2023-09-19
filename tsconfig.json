@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/node20",
+  "include": ["src"],
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "lib": ["es2023", "DOM"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}

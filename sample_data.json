@@ -1,0 +1,58 @@
+[
+  {
+    "id": "MIGROL_100041",
+    "name": "Migrol Tankstelle",
+    "address": "Scheffelstrasse 16",
+    "city": "Zürich",
+    "latitude": 47.3943939,
+    "longitude": 8.52981,
+    "pumps": [
+      {
+        "id": 10001,
+        "fuel_type": "BENZIN_95",
+        "price": 1.68,
+        "available": true
+      },
+      {
+        "id": 10002,
+        "fuel_type": "BENZIN_98",
+        "price": 1.77,
+        "available": false
+      },
+      {
+        "id": 10003,
+        "fuel_type": "DIESEL",
+        "price": 1.75,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "MIGROL_100085",
+    "name": "Migrol Service",
+    "address": "Birmensdorferstrasse 517",
+    "city": "Zürich",
+    "latitude": 47.367348257,
+    "longitude": 8.4942242729,
+    "pumps": [
+      {
+        "id": 10001,
+        "fuel_type": "BENZIN_95",
+        "price": 1.72,
+        "available": true
+      },
+      {
+        "id": 10002,
+        "fuel_type": "BENZIN_98",
+        "price": 1.79,
+        "available": true
+      },
+      {
+        "id": 10003,
+        "fuel_type": "DIESEL",
+        "price": 1.71,
+        "available": false
+      }
+    ]
+  }
+]
